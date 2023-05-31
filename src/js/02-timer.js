@@ -47,11 +47,18 @@ let intervalId = null;
 function onBtnStart() {
   intervalId = setInterval(() => {
     const currentTime = Date.now();
+
     const plannedTime = new Date(refs.input.value).getTime();
+
     const { seconds, minutes, hours, days } = convertMs(
       plannedTime - currentTime
     );
     updateTimer({ seconds, minutes, hours, days });
+
+    if (intervalId !== null) {
+      refs.timerBtn.disabled = true;
+      refs.input.disabled = true;
+    }
     if (
       parseInt(seconds) === 0 &&
       parseInt(minutes) === 0 &&
@@ -59,6 +66,7 @@ function onBtnStart() {
       parseInt(days) === 0
     ) {
       clearInterval(intervalId);
+      refs.input.disabled = false;
     }
   }, 1000);
 }

@@ -11,11 +11,13 @@ const refs = {
 refs.form.addEventListener('submit', onFormSubmit);
 
 function onFormSubmit(e) {
+  refs.submitBtn.disabled = true;
+
   e.preventDefault();
 
   let delay = parseInt(refs.delay.value);
+  const step = parseInt(refs.step.value);
   const amount = parseInt(refs.amount.value);
-  let step = parseInt(refs.step.value);
 
   for (let i = 1; i <= amount; i += 1) {
     createPromise(i, delay)
@@ -33,10 +35,12 @@ function onFormSubmit(e) {
   }
 }
 
+let timeoutId = null;
+
 function createPromise(position, delay) {
   const shouldResolve = Math.random() > 0.3;
   return new Promise((resolve, rejected) => {
-    intervalId = setTimeout(() => {
+    timeoutId = setTimeout(() => {
       if (shouldResolve) {
         resolve({ position, delay });
       } else rejected({ position, delay });
