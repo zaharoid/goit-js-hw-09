@@ -11,8 +11,6 @@ const refs = {
 refs.form.addEventListener('submit', onFormSubmit);
 
 function onFormSubmit(e) {
-  refs.submitBtn.disabled = true;
-
   e.preventDefault();
 
   let delay = parseInt(refs.delay.value);
